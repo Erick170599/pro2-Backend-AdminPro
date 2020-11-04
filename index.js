@@ -11,5 +11,7 @@ app.use(express.json());
 
 //Rutas
 app.use('/api/alumnos', require('./routes/alumnos'));
+app.use('/api/docentes', require('./routes/docentes'));
+app.use('/api/materias', require('./routes/materias'));
 
 app.listen(process.env.PORT);

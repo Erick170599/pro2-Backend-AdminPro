@@ -1,4 +1,4 @@
-//Ruta api/alumnos
+//Ruta api/docentes
 
 const Router = require('express');
 const conString = require('../database/config');
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     });
     sql.connect(conString).then(pool => {
         return pool.request()
-            .execute('stp_alumnos_getall');
+            .execute('stp_docentes_getall');
     }).then(result => {
         res.json(result.recordset);
     }).catch(err => {
@@ -30,8 +30,8 @@ router.get('/:id', (req, res) => {
     });
     sql.connect(conString).then(pool => {
         return pool.request()
-            .input('idAlumno', sql.Int, req.params.id)
-            .execute('stp_alumnos_getbyid');
+            .input('idDocente', sql.Int, req.params.id)
+            .execute('stp_docentes_getbyid');
     }).then(result => {
         res.json(result.recordset[0]);
     }).catch(err => {
@@ -49,14 +49,13 @@ router.post('/', (req, res) => {
         return pool.request()
             .input('nombre', sql.NVarChar, req.body.nombre)
             .input('edad', sql.Int, req.body.edad)
-            .input('sexo', sql.NVarChar, req.body.sexo)
-            .input('semestre', sql.Int, req.body.semestre)
-            .input('carrera', sql.NVarChar, req.body.carrera)
-            .execute('stp_alumnos_add');
+            .input('titulo', sql.NVarChar, req.body.titulo)
+            .input('tipo', sql.NVarChar, req.body.tipo)
+            .execute('stp_docentes_add');
     }).then(result => {
         res.status(201).json({
             status: "Ok",
-            msg: "Alumno agregado correctamente"
+            msg: "Docente agregado correctamente"
         });
     }).catch(err => {
         res.json(err);
@@ -71,17 +70,16 @@ router.put('/:id', (req, res) => {
     });
     sql.connect(conString).then(pool => {
         return pool.request()
-            .input('idAlumno', sql.Int, req.params.id)
+            .input('idDocente', sql.Int, req.params.id)
             .input('nombre', sql.NVarChar, req.body.nombre)
             .input('edad', sql.Int, req.body.edad)
-            .input('sexo', sql.NVarChar, req.body.sexo)
-            .input('semestre', sql.Int, req.body.semestre)
-            .input('carrera', sql.NVarChar, req.body.carrera)
-            .execute('stp_alumnos_update');
+            .input('titulo', sql.NVarChar, req.body.titulo)
+            .input('tipo', sql.NVarChar, req.body.tipo)
+            .execute('stp_docentes_update');
     }).then(result => {
         res.status(202).json({
             status: "Ok",
-            msg: "Alumno actualizado correctamente"
+            msg: "Docente actualizado correctamente"
         });
     }).catch(err => {
         res.json(err);
@@ -96,12 +94,12 @@ router.delete('/:id', (req, res) => {
     });
     sql.connect(conString).then(pool => {
         return pool.request()
-            .input('idAlumno', sql.NVarChar, req.params.id)
-            .execute('stp_alumnos_delete');
+            .input('idDocente', sql.NVarChar, req.params.id)
+            .execute('stp_docentes_delete');
     }).then(result => {
         res.status(200).json({
             status: "Ok",
-            msg: "Alumno eliminado correctamente"
+            msg: "Docente eliminado correctamente"
         });
     }).catch(err => {
         res.json(err);
